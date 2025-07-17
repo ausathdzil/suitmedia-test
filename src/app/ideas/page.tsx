@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { getIdeas } from '@/lib/data';
 
 export default function IdeasPage() {
   return (
@@ -21,6 +22,17 @@ export default function IdeasPage() {
         </div>
         <div className="absolute bottom-0 left-0 h-0 w-full border-r-0 border-r-transparent border-b-[120px] border-b-background border-l-[100vw] border-l-transparent" />
       </section>
+      <Ideas />
     </main>
   );
+}
+
+async function Ideas() {
+  const ideas = await getIdeas();
+
+  if (!ideas) {
+    return <div>Failed to fetch ideas</div>;
+  }
+
+  return <pre>{JSON.stringify(ideas.data, null, 2)}</pre>;
 }
