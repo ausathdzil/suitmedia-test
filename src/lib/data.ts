@@ -1,28 +1,33 @@
-import type { GetIdeasParams, IdeaResponse } from './definitions';
+import type { IdeaResponse } from './definitions';
+
+interface GetIdeasParams {
+  page?: string;
+  size?: string;
+  append?: string[];
+  sort?: string;
+}
 
 export async function getIdeas({
-  page = 1,
-  size = 10,
+  page = '1',
+  size = '10',
   append = ['small_image', 'medium_image'],
   sort = '-published_at',
 }: GetIdeasParams = {}): Promise<IdeaResponse | null> {
-  const params = new URLSearchParams();
-  params.append('page[number]', page.toString());
-  params.append('page[size]', size.toString());
-  for (const item of append) {
-    params.append('append[]', item);
-  }
-  params.append('sort', sort);
+  const params = [
+    `page[number]=${page}`,
+    `page[size]=${size}`,
+    ...append.map((item) => `append[]=${item}`),
+    `sort=${sort}`,
+  ].join('&');
+
+  const url = `${process.env.API_URL}/ideas?${params}`;
 
   try {
-    const res = await fetch(
-      `${process.env.API_URL}/ideas?${params.toString()}`,
-      {
-        headers: {
-          Accept: 'application/json',
-        },
-      }
-    );
+    const res = await fetch(url, {
+      headers: {
+        Accept: 'application/json',
+      },
+    });
     if (!res.ok) {
       throw new Error('Failed to fetch ideas');
     }

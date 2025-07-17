@@ -14,8 +14,8 @@ export interface Idea {
   deleted_at: string | null;
   created_at: string;
   updated_at: string;
-  small_image: Image[];
-  medium_image: Image[];
+  small_image: Image[] | null;
+  medium_image: Image[] | null;
 }
 
 interface MetaLinks {
@@ -24,7 +24,7 @@ interface MetaLinks {
   active: boolean;
 }
 
-interface Meta {
+export interface Meta {
   current_page: number;
   from: number;
   last_page: number;
@@ -46,11 +46,4 @@ export interface IdeaResponse {
   data: Idea[];
   links: Links;
   meta: Meta;
-}
-
-export interface GetIdeasParams {
-  page?: number;
-  size?: number;
-  append?: string[];
-  sort?: string;
 }

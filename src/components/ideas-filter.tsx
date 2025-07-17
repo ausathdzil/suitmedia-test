@@ -19,14 +19,14 @@ export function IdeasFilter(props: IdeasFilterProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const [pageSize, setPageSize] = useState(searchParams.get('page-size') ?? 10);
+  const [pageSize, setPageSize] = useState(searchParams.get('size') ?? 10);
   const [sort, setSort] = useState(searchParams.get('sort') ?? 'newest');
 
   const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newPageSize = e.target.value;
     setPageSize(newPageSize);
     const params = new URLSearchParams(searchParams);
-    params.set('page-size', newPageSize);
+    params.set('size', newPageSize);
     router.replace(`?${params.toString()}`, { scroll: false });
   };
 

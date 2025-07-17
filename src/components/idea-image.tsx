@@ -21,7 +21,7 @@ export function IdeaImage(props: IdeaImageProps) {
         fill
         // If idea image url is forbidden, use placeholder image
         onError={() => setImgSrc('https://placehold.co/300x150/png')}
-        src={imgSrc}
+        src={imgSrc === '' ? 'https://placehold.co/300x150/png' : imgSrc}
       />
     </div>
   );
