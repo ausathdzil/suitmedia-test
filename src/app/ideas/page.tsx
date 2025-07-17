@@ -1,9 +1,12 @@
 import Image from 'next/image';
+
+import { IdeaImage } from '@/components/idea-image';
 import { getIdeas } from '@/lib/data';
+import type { Idea } from '@/lib/definitions';
 
 export default function IdeasPage() {
   return (
-    <main className="flex min-h-[200vh] flex-col">
+    <main className="flex flex-1 flex-col gap-16 pb-16">
       <section className="relative h-[500px] w-full overflow-hidden">
         <Image
           alt="Hero banner"
@@ -31,8 +34,34 @@ async function Ideas() {
   const ideas = await getIdeas();
 
   if (!ideas) {
-    return <div>Failed to fetch ideas</div>;
+    return <div className="text-center">Failed to fetch ideas</div>;
   }
 
-  return <pre>{JSON.stringify(ideas.data, null, 2)}</pre>;
+  return (
+    <section className="grid w-full max-w-7xl grid-cols-1 gap-8 self-center lg:grid-cols-2 2xl:grid-cols-4">
+      {ideas.data.map((idea) => (
+        <IdeaCard idea={idea} key={idea.id} />
+      ))}
+    </section>
+  );
+}
+
+function IdeaCard({ idea }: { idea: Idea }) {
+  return (
+    <div className="flex h-full w-[300px] flex-col rounded-xl shadow-lg">
+      <IdeaImage src={idea.small_image[0].url} title={idea.title} />
+      <article className="flex-1 p-4 tracking-tight">
+        <p className="font-semibold text-muted text-sm uppercase">
+          {new Date(idea.published_at).toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          })}
+        </p>
+        <h1 className="line-clamp-3 text-ellipsis font-semibold text-lg">
+          {idea.title}
+        </h1>
+      </article>
+    </div>
+  );
 }
