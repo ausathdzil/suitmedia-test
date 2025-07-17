@@ -1,5 +1,7 @@
 'use client';
 
+import { TriangleIcon } from 'lucide-react';
+
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
@@ -85,16 +87,8 @@ function Select({
       >
         {children}
       </select>
-      <span className="pointer-events-none absolute inset-y-0 right-1 flex items-center">
-        <svg
-          aria-hidden="true"
-          className="size-6 text-foreground-secondary"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <title>Open dropdown</title>
-          <polygon points="5,6 15,6 10,14" />
-        </svg>
+      <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+        <TriangleIcon className="size-3 rotate-180 fill-foreground-secondary" />
       </span>
     </div>
   );
