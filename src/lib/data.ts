@@ -2,7 +2,7 @@ import type { GetIdeasParams, IdeaResponse } from './definitions';
 
 export async function getIdeas({
   page = 1,
-  size = 8,
+  size = 10,
   append = ['small_image', 'medium_image'],
   sort = '-published_at',
 }: GetIdeasParams = {}): Promise<IdeaResponse | null> {
